@@ -197,7 +197,7 @@ foreach my $mirror (@ARGV) {
 	} elsif ($mirror =~ /^\@OPENWRT$/) {
 		# use OpenWrt source server directly
 	} elsif ($mirror =~ /^\@APACHE\/(.+)$/) {
-		push @mirrors, "https://mirrors.cloud.tencent.com/apache/$1";
+		push @mirrors, "https://mirrors.tencent.com/apache/$1";
 		push @mirrors, "https://mirrors.aliyun.com/apache/$1";
 		push @mirrors, "https://mirrors.tuna.tsinghua.edu.cn/apache/$1";
 		push @mirrors, "https://mirrors.ustc.edu.cn/apache/$1";
@@ -215,12 +215,14 @@ foreach my $mirror (@ARGV) {
 		my $i = 0;
 		# replace the 2nd '/' with '@' for jsDelivr mirror
 		push @mirrors, "https://cdn.jsdelivr.net/gh/". $dir =~ s{\/}{++$i == 2 ? '@' : $&}ger;
+		push @mirrors, "https://raw.sevencdn.com/$dir";
+		push @mirrors, "https://raw.fastgit.org/$dir";
 		# give github a few more tries (different mirrors)
 		for (1 .. 5) {
 			push @mirrors, "https://raw.githubusercontent.com/$dir";
 		}
 	} elsif ($mirror =~ /^\@GNU\/(.+)$/) {
-		push @mirrors, "https://mirrors.cloud.tencent.com/gnu/$1";
+		push @mirrors, "https://mirrors.tencent.com/gnu/$1";
 		push @mirrors, "https://mirrors.tuna.tsinghua.edu.cn/gnu/$1";
 		push @mirrors, "https://mirrors.cqu.edu.cn/gnu/$1";
 		push @mirrors, "https://mirrors.ustc.edu.cn/gnu/$1";
@@ -238,7 +240,6 @@ foreach my $mirror (@ARGV) {
 		push @mirrors, "http://ftp.acc.umu.se/mirror/gnu.org/savannah/$1";
 		push @mirrors, "http://nongnu.uib.no/$1";
 		push @mirrors, "http://ftp.igh.cnrs.fr/pub/nongnu/$1";
-		push @mirrors, "http://public.p-knowledge.co.jp/Savannah-nongnu-mirror/$1";
 		push @mirrors, "ftp://cdimage.debian.org/mirror/gnu.org/savannah/$1";
 		push @mirrors, "ftp://ftp.acc.umu.se/mirror/gnu.org/savannah/$1";
 	} elsif ($mirror =~ /^\@KERNEL\/(.+)$/) {
@@ -252,7 +253,6 @@ foreach my $mirror (@ARGV) {
 			push @mirrors, "https://mirrors.cqu.edu.cn/kernel/$dir";
 			push @mirrors, "https://mirrors.ustc.edu.cn/kernel.org/$dir";
 			push @mirrors, "https://cdn.kernel.org/pub/$dir";
-			push @mirrors, "https://mirror.rackspace.com/kernel.org/pub/$dir";
 			push @mirrors, "https://download.xs4all.nl/ftp.kernel.org/pub/$dir";
 			push @mirrors, "https://mirrors.mit.edu/kernel/$dir";
 			push @mirrors, "http://ftp.nara.wide.ad.jp/pub/kernel.org/$dir";
@@ -275,6 +275,9 @@ foreach my $mirror (@ARGV) {
 	}
 }
 
+unshift @mirrors, "https://openwrt.cc/dl/immortalwrt/master";
+unshift @mirrors, "https://mirror01.download.immortalwrt.org/openwrt-21.02";
+unshift @mirrors, "http://182.140.223.146/dl";
 push @mirrors, 'https://sources.cdn.openwrt.org';
 push @mirrors, 'https://sources.openwrt.org';
 push @mirrors, 'https://mirror2.openwrt.org/sources';
